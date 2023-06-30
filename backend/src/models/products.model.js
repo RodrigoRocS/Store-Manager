@@ -13,7 +13,16 @@ const [products] = await conn.execute('SELECT * FROM products');
 return products; 
 };
 
+const insert = async (productData) => {
+  const [{ insertId }] = await conn.execute(
+'INSERT INTO products (name) VALUE (?);',
+  [productData],
+);
+  return insertId;
+};
+
 module.exports = {
   findById,
   findAll,
+  insert,
 };
