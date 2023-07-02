@@ -20,7 +20,22 @@ INNER JOIN sales_products AS SP WHERE S.id = SP.sale_id;`);
 return sales; 
 };
 
+const insert = async (salesData) => {
+  const [{ insertId }] = await conn.execute('INSERT INTO sales (date) VALUES (NOW())');
+
+  const promises = salesData.map(({ productId, quantity }) =>
+   conn.execute(
+'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?);',
+    [insertId, productId, quantity],
+));
+
+  await Promise.all(promises);
+
+  return { id: insertId, itemsSold: salesData };
+};
+
 module.exports = {
   findById,
   findAll,
+  insert,
 };
