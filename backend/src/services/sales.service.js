@@ -1,5 +1,5 @@
-const { salesModel } = require('../models');
-// const { validateNewSale } = require('./validations/validationInputValues');
+const { salesModel, productsModel } = require('../models');
+const { validateNewSale } = require('./validations/validationInputValues');
 
 const getAll = async () => {
   const allSales = await salesModel.findAll();
@@ -13,13 +13,18 @@ const getById = async (id) => {
 };
 
 const insert = async (salesData) => {
-//   const error = validateNewSale(salesData);
-//   if (error) {
-//  return { status: 'INVALID_VALUE',
-//    data: { message: '"name" length must be at least 5 characters long' } }; 
-// }
+  const error = validateNewSale(salesData);
+  if (error) {
+ return { status: error.status,
+   data: { message: error.message } }; 
+}
 
-  // if (!salesData.name) return { status: 'BAD_REQUEST', data: { message: '"name" is required' } };
+const verifyIdPromises = salesData.map((e) => productsModel.findById(e.productId));
+const verifyIds = await Promise.all(verifyIdPromises);
+
+if (verifyIds.includes(undefined)) {
+  return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+}
 
   const newProduct = await salesModel.insert(salesData);
   return { status: 'CREATED', data: newProduct };

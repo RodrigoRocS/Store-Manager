@@ -5,7 +5,7 @@ const findById = async (productId) => {
     'SELECT * FROM products WHERE id = ?',
     [productId],
   );
-  return (product);
+  return product;
 };
 
 const findAll = async () => {
