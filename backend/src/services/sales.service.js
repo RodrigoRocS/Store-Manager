@@ -21,7 +21,6 @@ const insert = async (salesData) => {
 
 const verifyIdPromises = salesData.map((e) => productsModel.findById(e.productId));
 const verifyIds = await Promise.all(verifyIdPromises);
-
 if (verifyIds.includes(undefined)) {
   return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
 }
