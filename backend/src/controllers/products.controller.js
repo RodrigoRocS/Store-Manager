@@ -22,7 +22,6 @@ const updateProduct = async (req, res) => {
   const { id } = req.params;
   const productData = req.body;
   const { status, data } = await productService.update({ id, productData });
-  console.log({ id, productData });
   return res.status(mapStatusHTTP(status)).json(data);
 };
 
