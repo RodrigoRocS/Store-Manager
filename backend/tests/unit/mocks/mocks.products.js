@@ -37,6 +37,15 @@ const updateModelReturn = [{
   changedRows: 1,
 }];
 
+const deleteModelReturn = [{
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 0,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0,
+  }];
+
 const findSuccessful = { status: 'SUCCESSFUL', data: allProducts };
 const findSuccessfulId = { status: 'SUCCESSFUL', data: productById };
 
@@ -49,4 +58,5 @@ insertProduct,
 idFromModel,
 updateProduct,
 updateModelReturn,
+deleteModelReturn,
  };

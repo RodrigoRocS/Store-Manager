@@ -26,12 +26,10 @@ const update = async ({ id, productData }) => conn.execute(
     [productData.name, id],
   );
 
-const deleteProduct = async (id) => {
-  await conn.execute(
+const deleteProduct = async (id) => conn.execute(
     'DELETE FROM products WHERE id = ?',
     [id],
   );
-};
 
 module.exports = {
   findById,

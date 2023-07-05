@@ -3,11 +3,11 @@ const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
 const { productsModel } = require('../../../src/models');
 const { 
-  productById, allProducts, productIdFromDB, insertProduct, idFromModel, updateModelReturn, 
+  productById, allProducts, productIdFromDB, insertProduct, idFromModel, updateModelReturn, deleteModelReturn, 
 } = require('../mocks/mocks.products');
 
 describe('Products models tests', function () {
-  it('Should return a product by id', async function () {
+  it('Should return a product by id in db', async function () {
     sinon.stub(connection, 'execute').resolves([[productById]]);
 
     const id = 1;
@@ -17,7 +17,7 @@ describe('Products models tests', function () {
     expect(product).to.be.deep.equal(productById);
   });
 
-  it('Should return all products', async function () {
+  it('Should return all products in db', async function () {
     sinon.stub(connection, 'execute').resolves([allProducts]);
 
     const product = await productsModel.findAll();
@@ -47,16 +47,15 @@ describe('Products models tests', function () {
   });
 
   it('Should delete a product in db', async function () {
-    sinon.stub(connection, 'execute').resolves(updateModelReturn);
+    sinon.stub(connection, 'execute').resolves(deleteModelReturn);
 
     const id = 1;
-
     const result = await productsModel.deleteProduct(id);
 
     expect(result).to.be.an('array');
     expect(result[0]).to.be.an('object');
     expect(result[0].affectedRows).to.be.equal(1);
-    expect(result[0].changedRows).to.be.equal(1);
+    expect(result[0].insertId).to.be.equal(0);
   });
 
   afterEach(function () {
