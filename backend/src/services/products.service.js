@@ -34,15 +34,16 @@ const update = async ({ id, productData }) => {
    data: { message: '"name" length must be at least 5 characters long' } }; 
 }
 
-  const updateProduct = await productsModel.update({ id, productData });
-
-  return { status: 'SUCCESSFUL', data: updateProduct };
+const [updateProduct] = await productsModel.update({ id, productData });
+if (updateProduct.affectedRows > 0) {
+ return { status: 'SUCCESSFUL',
+   data: { id: Number(id), ...productData } }; 
+}
 };
 
 const deleteProduct = async (id) => {
   const productById = await productsModel.findById(id);
   if (!productById) {
-    console.log(productById);
     return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
   }
    await productsModel.deleteProduct(id);

@@ -21,7 +21,6 @@ describe('Products controller tests', function () {
     const { data } = findSuccessful;
 
     await productController.allProducts(req, res);
-    console.log(res.status);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(data);
   });
@@ -39,7 +38,6 @@ describe('Products controller tests', function () {
     const { data } = findSuccessfulId;
 
     await productController.productById(req, res);
-    console.log(res.status);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(data);
   });
