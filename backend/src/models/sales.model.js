@@ -8,7 +8,6 @@ const findById = async (id) => {
     WHERE SP.sale_id = ?`,
     [id],
   );
-  
   return sale;
 };
 
@@ -30,7 +29,6 @@ const insert = async (salesData) => {
 ));
 
   await Promise.all(promises);
-
   return { id: insertId, itemsSold: salesData };
 };
 
